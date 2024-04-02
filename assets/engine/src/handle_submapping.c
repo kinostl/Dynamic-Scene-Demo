@@ -29,36 +29,24 @@ void make_maze(SCRIPT_CTX * THIS) OLDCALL BANKED {
 
     for(int y=0;y<18;y++){
         for(int x=0;x<20;x++){
-            map_buffer[y][x] = 0x00;
-            coll_buffer[y][x] = 0x00;
-        }
-    }
-
-    for(int y=0;y<18;y+=2){
-        for(int x=0;x<20;x++){
             map_buffer[y][x] = 0x03;
             coll_buffer[y][x] = 0x0F;
         }
     }
 
-    for(int y=0;y<18;y++){
-        for(int x=0;x<20;x+=2){
-            map_buffer[y][x] = 0x03;
-            coll_buffer[y][x] = 0x0F;
-        }
+
+    for(int x=0;x<20;x++){
+        map_buffer[0][x] = 0x00;
+        coll_buffer[0][x] = 0x00;
     }
 
-    for(int x=2;x<20;x+=2){
-        map_buffer[1][x] = 0x00;
-        coll_buffer[1][x] = 0x00;
-    }
+    for(int y = 2; y<18; y+=2){
+        for(int i = 0; i<20; i++){
+            int width = random(10 - (i/2)) * 2;
+            int next = i + width + 1;
+            if(next>=18) next = 20;
 
-    for(int y = 3; y<18; y+=2){
-        for(int i = 2; i<22; i+=2){
-            int width = random(11 - (i/2)) * 2;
-            int next = i + width;
-
-            for(int x=i;x<next;x+=2){
+            for(int x=i;x<next;x++){
                 map_buffer[y][x] = 0x00;
                 coll_buffer[y][x] = 0x00;
             }
