@@ -12,6 +12,7 @@
 #define COLLISION_RIGHT 0x8
 #define COLLISION_ALL 0xF
 #define TILE_PROP_LADDER 0x10
+#define TILE_PROP_SCORE 0X80
 
 typedef struct bounding_box_t {
     BYTE left, right, top, bottom;

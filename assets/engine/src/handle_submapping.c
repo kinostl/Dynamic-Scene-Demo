@@ -51,17 +51,41 @@ void make_maze(SCRIPT_CTX * THIS) OLDCALL BANKED {
                 coll_buffer[y][x] = 0x00;
             }
 
-            int n_hole = random(width/2) * 2;
-            map_buffer[y-1][next - n_hole - 1] = 0x00;
-            coll_buffer[y-1][next - n_hole - 1] = 0x00;
+            i = next;
+        }
+    }
 
-            if(random(2) == 1){
-                int p_hole = random(width/2) * 2;
-                map_buffer[y][next - p_hole - 1] = 0x01;
-                coll_buffer[y][next - p_hole - 1] = 0x00;
+    for(int y = 1; y<17; y+=2){
+        int width = 0;
+        unsigned char top;
+        unsigned char bottom;
+        for(int x=0;x<22;x++){
+            top = map_buffer[y -1][x];
+            bottom = map_buffer[y+1][x];
+
+            if(top == 0x00 && bottom == 0x00) {
+                width++;
+                continue;
             }
 
-            i = next;
+            int n_hole = x - random(width) - 1;
+            map_buffer[y][n_hole] = 0x00;
+            coll_buffer[y][n_hole] = 0x00;
+
+            if(random(2) == 1){
+                switch(random(3)){
+                    case 2:
+                        map_buffer[y][n_hole] = 0x01;
+                        break;
+                    case 1:
+                        n_hole = x - random(width) - 1;
+                        map_buffer[y - 1][n_hole] = 0x01;
+                        coll_buffer[y - 1][n_hole] = 0x80;
+                        break;
+                }
+            }
+
+            width = 0;
         }
     }
 
